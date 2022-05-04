@@ -228,7 +228,13 @@ ProcessImport = new function()
                 	YAHOO.SUGAR.MessageBox.minWidth = 500;
                 	YAHOO.SUGAR.MessageBox.show({
                     	type:  "alert",
-                    	title: '{$mod_strings['LBL_IMPORT_ERROR']}',
+                        //----------------------------------------------------------
+                        // TPX CUSTOM CODE
+                        // Cambio de ' por "" porque los mensajes en catalán tienen ' en el texto
+                        //----------------------------------------------------------
+                        //title: '{$mod_strings['LBL_IMPORT_ERROR']}',
+                        title: "{$mod_strings['LBL_IMPORT_ERROR']}",
+                        //----------------------------------------------------------
                     	msg:   o.responseText,
                         fn: function() { window.location.reload(true); }
                     });

@@ -1,49 +1,25 @@
 <?php
-// created: 2018-08-15 11:18:10
+// created: 2022-05-03 12:34:17
 $unified_search_modules_display = array (
   'Accounts' => 
   array (
     'visible' => true,
   ),
-  'Contacts' => 
+  'AOBH_BusinessHours' => 
   array (
-    'visible' => true,
+    'visible' => false,
   ),
-  'Opportunities' => 
+  'AOD_Index' => 
   array (
-    'visible' => true,
+    'visible' => false,
   ),
-  'Calls' => 
+  'AOD_IndexEvent' => 
   array (
-    'visible' => true,
+    'visible' => false,
   ),
-  'Documents' => 
+  'AOK_Knowledge_Base_Categories' => 
   array (
-    'visible' => true,
-  ),
-  'Cases' => 
-  array (
-    'visible' => true,
-  ),
-  'AOS_Contracts' => 
-  array (
-    'visible' => true,
-  ),
-  'Leads' => 
-  array (
-    'visible' => true,
-  ),
-  'Meetings' => 
-  array (
-    'visible' => true,
-  ),
-  'Notes' => 
-  array (
-    'visible' => true,
-  ),
-  'Campaigns' => 
-  array (
-    'visible' => true,
+    'visible' => false,
   ),
   'AOP_Case_Events' => 
   array (
@@ -54,6 +30,14 @@ $unified_search_modules_display = array (
     'visible' => false,
   ),
   'AOR_Reports' => 
+  array (
+    'visible' => false,
+  ),
+  'AOR_Scheduled_Reports' => 
+  array (
+    'visible' => false,
+  ),
+  'AOS_Contracts' => 
   array (
     'visible' => false,
   ),
@@ -89,7 +73,27 @@ $unified_search_modules_display = array (
   array (
     'visible' => false,
   ),
+  'Calls' => 
+  array (
+    'visible' => false,
+  ),
   'Calls_Reschedule' => 
+  array (
+    'visible' => false,
+  ),
+  'Campaigns' => 
+  array (
+    'visible' => false,
+  ),
+  'Cases' => 
+  array (
+    'visible' => false,
+  ),
+  'Contacts' => 
+  array (
+    'visible' => false,
+  ),
+  'Documents' => 
   array (
     'visible' => false,
   ),
@@ -98,6 +102,26 @@ $unified_search_modules_display = array (
     'visible' => false,
   ),
   'FP_events' => 
+  array (
+    'visible' => false,
+  ),
+  'Leads' => 
+  array (
+    'visible' => false,
+  ),
+  'Meetings' => 
+  array (
+    'visible' => false,
+  ),
+  'Notes' => 
+  array (
+    'visible' => false,
+  ),
+  'Opportunities' => 
+  array (
+    'visible' => false,
+  ),
+  'OutboundEmailAccounts' => 
   array (
     'visible' => false,
   ),
@@ -114,6 +138,30 @@ $unified_search_modules_display = array (
     'visible' => false,
   ),
   'Prospects' => 
+  array (
+    'visible' => false,
+  ),
+  'SurveyQuestionOptions' => 
+  array (
+    'visible' => false,
+  ),
+  'SurveyQuestionResponses' => 
+  array (
+    'visible' => false,
+  ),
+  'SurveyQuestions' => 
+  array (
+    'visible' => false,
+  ),
+  'SurveyResponses' => 
+  array (
+    'visible' => false,
+  ),
+  'Surveys' => 
+  array (
+    'visible' => false,
+  ),
+  'TPX_DynamicConfiguration' => 
   array (
     'visible' => false,
   ),
@@ -134,6 +182,18 @@ $unified_search_modules_display = array (
     'visible' => false,
   ),
   'jjwg_Markers' => 
+  array (
+    'visible' => false,
+  ),
+  'kan_colors' => 
+  array (
+    'visible' => false,
+  ),
+  'kan_conditions' => 
+  array (
+    'visible' => false,
+  ),
+  'kan_sorts' => 
   array (
     'visible' => false,
   ),

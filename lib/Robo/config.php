@@ -52,5 +52,13 @@ if (is_file($root . '/config_override.php')) {
     require_once $root . '/config_override.php';
 }
 
+//-------------------------------------------------------------------------
+// TPX CUSTOM CODE
+// Load .env.php file to override configuration
+//-------------------------------------------------------------------------
+if (is_file($root . '/.env.php')) {
+    require_once($root . '/.env.php');
+}
+//-------------------------------------------------------------------------
 $GLOBALS['sugar_config'] = $sugar_config;
 require_once $root . '/include/SugarObjects/SugarConfig.php';

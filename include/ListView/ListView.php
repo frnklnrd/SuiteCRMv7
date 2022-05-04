@@ -1094,10 +1094,21 @@ class ListView
 
         // choose sort order
         $sort_order = array();
-        $sort_order['default'] = 'asc';
+
+        //-----------------------------------------------------------------
+        // TPX CUSTOM CODE
+        // No ordenar siempre ascendentemente sino por el parametro que viene por request en los listados
+        //-----------------------------------------------------------------
+        // $sort_order['default'] = 'asc';
+        if(isset($subpanel_def->_instance_properties['sort_order']))
+            $sort_order['default'] = $subpanel_def->_instance_properties['sort_order'];
+         else
+            $sort_order['default'] = 'asc';
 
         // explicit request parameter gets priority over all
-        $sort_order['request'] = isset($_REQUEST['sort_order']) ? $_REQUEST['sort_order'] : null;
+        $sort_order['request'] = isset($_REQUEST['sort_order']) ? $_REQUEST['sort_order'] : '';
+
+        //----------------------------------------------------------------
 
         // see if the session data has a sort order
         if (isset($_SESSION['last_sub' . $this->subpanel_module . '_order'])) {

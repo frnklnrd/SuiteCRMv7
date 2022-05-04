@@ -654,6 +654,20 @@ class MysqlManager extends DBManager
                     return "DATE_FORMAT($string,'%Y-%m-%d')";
                 } else {
                     $format = $additional_parameters[0];
+                    //----------------------------------------------------------------------------
+                    // TPX CUSTOM CODE
+                    // Functions for reports
+                    //----------------------------------------------------------------------------
+                    if ($format == 'first_day_of_week' || $format == 'f%Mr%St_%d%Py_of_week') {
+                        return sprintf("DATE_FORMAT(DATE_SUB(%s,INTERVAL (DAYOFWEEK(%s)-2) DAY),", $string, $string) . "'%Y-%m-%d')";
+                    }
+                    if ($format == 'number_of_week_day' || $format == '%mu%mber_of_week_%d%Py') {
+                        return sprintf("WEEKDAY(%s)+1", $string);
+                    }
+                    if ($format == 'number_of_week_month' || $format == '%mu%mber_of_week_%mo%mt%I') {
+                        return sprintf("FLOOR((DAYOFMONTH(%s)+DAYOFWEEK(DATE_FORMAT(%s", $string, $string) . ",'%Y-%m-01'))-2)/7)+1";
+                    }
+                    //----------------------------------------------------------------------------
                     if ($format[0] != "'") {
                         $format = $this->quoted($format);
                     }

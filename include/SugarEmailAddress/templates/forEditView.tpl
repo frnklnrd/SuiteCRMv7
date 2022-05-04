@@ -55,14 +55,19 @@ var emailAddressWidgetLoaded = false;
 <script type="text/javascript">
 	var module = '{$module}';
 </script>
-
 <div class="col-xs-12">
+	<!-- // ---------------------------------------------------------------------------------->
+	<!-- // TPX CUSTOM CODE -->
+	<!-- // Cambiar disposicion en el widget del boton de add email -->
+	<!-- // ---------------------------------------------------------------------------------->
+	<!--
 	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
 		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
 		<button type="button" class="btn btn-danger email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
 			<span class="suitepicon suitepicon-action-plus"></span><span></span>
 		</button>
 	</div>
+	-->
 	<div class="col-xs-12 email-address-lines-container">
 		{*
 		@version > SuiteCRM 7.7.5
@@ -132,6 +137,16 @@ var emailAddressWidgetLoaded = false;
 			</div>
 		</div>
 
+	</div>
+	<!-- // ---------------------------------------------------------------------------------->
+	<!-- // TPX CUSTOM CODE -->
+	<!-- // Cambiar disposicion en el widget del boton de add email -->
+	<!-- // ---------------------------------------------------------------------------------->
+	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
+		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
+		<button type="button" class="btn btn-danger email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
+			<span class="suitepicon suitepicon-action-plus"></span><span></span>
+		</button>
 	</div>
 </div>
 <input type="hidden" name="useEmailWidget" value="true">

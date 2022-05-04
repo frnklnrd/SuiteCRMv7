@@ -2974,19 +2974,75 @@ $app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or 
 $app_list_strings['aor_operator_list']['Contains'] = 'Contains';
 $app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
+
+//-----------------------------------------------------------------------------
+// TPX CUSTOM CODE
+// Date formats for reports
+//-----------------------------------------------------------------------------
+
 $app_list_strings['aor_format_options'][''] = '';
-$app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
-$app_list_strings['aor_format_options']['m-d-Y'] = 'm-d-Y';
-$app_list_strings['aor_format_options']['d-m-Y'] = 'd-m-Y';
-$app_list_strings['aor_format_options']['Y/m/d'] = 'Y/m/d';
-$app_list_strings['aor_format_options']['m/d/Y'] = 'm/d/Y';
-$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
-$app_list_strings['aor_format_options']['Y.m.d'] = 'Y.m.d';
-$app_list_strings['aor_format_options']['m.d.Y'] = 'm.d.Y';
-$app_list_strings['aor_format_options']['d.m.Y'] = 'd.m.Y';
-$app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
-$app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
-$app_list_strings['aor_format_options']['Y'] = 'Y';
+
+$app_list_strings['aor_format_options']['Y-m-d'] = 'A-m-d';
+$app_list_strings['aor_format_options']['d-m-Y'] = 'd-m-A';
+$app_list_strings['aor_format_options']['Y/m/d'] = 'A/m/d';
+$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/A';
+
+$app_list_strings['aor_format_options']['Y-m'] = 'A-m';
+$app_list_strings['aor_format_options']['m-Y'] = 'm-A';
+$app_list_strings['aor_format_options']['Y/m'] = 'A/m';
+$app_list_strings['aor_format_options']['m/Y'] = 'm/A';
+
+$app_list_strings['aor_format_options']['m-d'] = 'm-d';
+$app_list_strings['aor_format_options']['d-m'] = 'd-m';
+$app_list_strings['aor_format_options']['m/d'] = 'm/d';
+$app_list_strings['aor_format_options']['d/m'] = 'd/m';
+
+$app_list_strings['aor_format_options']['Y'] = 'A';
+$app_list_strings['aor_format_options']['m'] = 'm';
+$app_list_strings['aor_format_options']['d'] = 'd';
+
+$app_list_strings['aor_format_options']['Ymd'] = 'Amd';
+$app_list_strings['aor_format_options']['dmY'] = 'dmA';
+$app_list_strings['aor_format_options']['Ym'] = 'Am';
+$app_list_strings['aor_format_options']['mY'] = 'mA';
+$app_list_strings['aor_format_options']['md'] = 'md';
+$app_list_strings['aor_format_options']['dm'] = 'dm';
+
+$app_list_strings['aor_format_options']['Y-m-01'] = 'A-m-01';
+$app_list_strings['aor_format_options']['01-m-Y'] = '01-m-A';
+$app_list_strings['aor_format_options']['Y/m/01'] = 'A/m/01';
+$app_list_strings['aor_format_options']['01/m/Y'] = '01/m/A';
+$app_list_strings['aor_format_options']['Y-01-01'] = 'A-01-01';
+$app_list_strings['aor_format_options']['Y/01/01'] = 'A/01/01';
+$app_list_strings['aor_format_options']['01-01-Y'] = '01-01-Y';
+$app_list_strings['aor_format_options']['01/01/Y'] = '01/01/A';
+
+$app_list_strings['aor_format_options']['%b'] = 'Short Month';
+$app_list_strings['aor_format_options']['%b, Y'] = 'Short Month, Y';
+$app_list_strings['aor_format_options']['Y, %b'] = 'Y, Sort Month';
+
+$app_list_strings['aor_format_options']['i'] = 'Month';
+$app_list_strings['aor_format_options']['i, Y'] = 'Month, Y';
+$app_list_strings['aor_format_options']['Y, i'] = 'Y, Month';
+
+$app_list_strings['aor_format_options']['%r'] = 'hh:mm:ss AA';
+
+$app_list_strings['aor_format_options']['%T'] = 'HH:MM:SS';
+
+$app_list_strings['aor_format_options']['%V'] = 'Week of Year S';
+
+$app_list_strings['aor_format_options']['%v'] = 'Week of Year M';
+
+$app_list_strings['aor_format_options']['%j'] = 'Day of Year';
+
+$app_list_strings['aor_format_options']['first_day_of_week'] = 'Week Date';
+
+$app_list_strings['aor_format_options']['number_of_week_day'] = 'Day of Week';
+
+$app_list_strings['aor_format_options']['number_of_week_month'] = 'Week of Month';
+
+//------------------------------------------------------------------------
+
 $app_list_strings['aor_condition_operator_list']['And'] = 'And';
 $app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
 $app_list_strings['aor_condition_type_list']['Value'] = 'Value';
@@ -3047,6 +3103,17 @@ $app_list_strings['date_time_period_list']['this_quarter'] = 'This Quarter';
 $app_list_strings['date_time_period_list']['last_quarter'] = 'Last Quarter';
 $app_list_strings['date_time_period_list']['this_year'] = 'This year';
 $app_list_strings['date_time_period_list']['last_year'] = 'Last year';
+//-----------------------------------------------------------------------------------------------------
+// TPX CUSTOM CODE
+// Future periods
+//-----------------------------------------------------------------------------------------------------
+$app_list_strings['date_time_period_list']['tomorrow'] = 'Tomorrow';
+$app_list_strings['date_time_period_list']['next_week'] = 'Next Week';
+$app_list_strings['date_time_period_list']['next_month'] = 'Next Month';
+$app_list_strings['date_time_period_list']['next_quarter'] = 'Next Quarter';
+$app_list_strings['date_time_period_list']['next_year'] = 'Next Year';
+//-----------------------------------------------------------------------------------------------------
+
 $app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
 $app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
 $app_strings['LBL_CRON_AT'] = 'at';
@@ -3511,6 +3578,8 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 //SecurityGroups
 $app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
+$app_strings['LBL_LOGIN_AS'] = 'Login as ';
+$app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';

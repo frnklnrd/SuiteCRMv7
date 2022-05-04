@@ -239,7 +239,33 @@ class CaseUpdatesHook
 
         if ($email->cases) {
             $GLOBALS['log']->warn('CaseUpdatesHook: saveEmailUpdate cases already set');
-
+            //------------------------------------------------------------------------------------------------------------------------------
+            // TPX CUSTOM CODE
+            // Conocer otros parametros cuando el Case viene a traves de un email leido
+            //------------------------------------------------------------------------------------------------------------------------------
+            $ea = new SugarEmailAddress();
+            $beans = $ea->getBeansByEmailAddress($email->from_addr);
+            $contact_id = null;
+            foreach ($beans as $emailBean) {
+                if ($emailBean->module_name === 'Contacts' && !empty($emailBean->id)) {
+                    $contact_id = $emailBean->id;
+                    $this->linkAccountAndCase($email->parent_id, $emailBean->account_id);
+                }
+            }
+            $caseUpdate = new AOP_Case_Updates();
+            $caseUpdate->name = $email->name;
+            $caseUpdate->contact_id = $contact_id;
+            $updateText = $this->unquoteEmail($email->description_html ? $email->description_html : $email->description);
+            $caseUpdate->description = $updateText;
+            $caseUpdate->internal = false;
+            $caseUpdate->case_id = $email->parent_id;
+            //--------------------------------------
+            $caseUpdate->created_from_email_address = !empty($email->reply_to_email) ? $email->reply_to_email : $email->from_addr;
+            $caseUpdate->created_from_source_type = 'Email';
+            $caseUpdate->created_from_source_id = $email->id;
+            //--------------------------------------
+            $caseUpdate->save();
+            //--------------------------------------------------------------------------------
             return;
         }
 
@@ -264,6 +290,14 @@ class CaseUpdatesHook
         $caseUpdate->description = $updateText;
         $caseUpdate->internal = false;
         $caseUpdate->case_id = $email->parent_id;
+        //--------------------------------------------------------------------------------
+        // TPX CUSTOM CODE
+        // Conocer otros parametros cuando el Case viene a traves de un email leido
+        //--------------------------------------------------------------------------------
+        $caseUpdate->created_from_email_address = !empty($email->reply_to_email) ? $email->reply_to_email : $email->from_addr;
+        $caseUpdate->created_from_source_type = 'Email';
+        $caseUpdate->created_from_source_id = $email->id;
+        //--------------------------------------------------------------------------------
         $caseUpdate->save();
         $notes = $email->get_linked_beans('notes', 'Notes');
         foreach ($notes as $note) {

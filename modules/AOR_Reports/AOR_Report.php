@@ -692,17 +692,38 @@ class AOR_Report extends Basic
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
             $fields[$label]['format'] = $field->format;
-            $fields[$label]['params'] = [];
 
-
+            //----------------------------------------------------------------------------------------------------------
+            // TPX CUSTOM CODE
+            // Permitir ordenar los reportes segun el click en la cabecera de la columna
+            //----------------------------------------------------------------------------------------------------------
             if ($fields[$label]['display']) {
                 // Fix #5427
-                $html .= "<th scope='col'>";
+
+                $sort_order = 'ASC';
+                $sort_order_class = "suitepicon-action-sorting-none";
+
+                if (isset($_REQUEST['order_by']) && $_REQUEST['order_by'] == $field->field) {
+                    if (isset($_REQUEST['sort_order']) && $_REQUEST['sort_order'] == 'ASC')
+                        $sort_order = 'DESC';
+                    elseif (isset($_REQUEST['sort_order']) && $_REQUEST['sort_order'] == 'DESC')
+                        $sort_order = 'ASC';
+
+                    $sort_order_class = 'suitepicon-action-sorting-' . strtolower($sort_order) . 'ending';
+                }
+
+                $url_view_record = 'index.php?module=AOR_Reports&action=DetailView&record=' . $this->id . '&order_by=' . $field->field . '&sort_order=' . $sort_order;
+
+                $html .= "<th scope='col' style='{$thead_style}' data-module='{$field_module}' data-field='{$field->field}' data-sort-order='{$sort_order}' onclick='TPX.utils._aor_reports_add_order_field_to_form(this)'>";
                 // End
                 $html .= "<div>";
+                $html .= "<a href='" . $url_view_record . "' class='listViewThLinkS1'>";
                 $html .= $field->label;
+                $html .= '<span class="suitepicon ' . $sort_order_class . '" title="Ordenar ascendente" style="margin-left: 5px"></span>';
+                $html .= "</a>";
                 $html .= "</div></th>";
             }
+            //------------------------------------------------------------------------------------------------------------
             ++$i;
         }
 
@@ -1187,6 +1208,17 @@ class AOR_Report extends Basic
             $query .= ' ' . $query_sort_by;
         }
 
+        //--------------------------------------------------------------------------------------------------------------------
+        // TPX CUSTOM CODE
+        // Codigo util para el desarrollador, que permite debuguear el sql generado en los reportes
+        //--------------------------------------------------------------------------------------------------------------------
+        TPX_Core_Logs_Utils::log_line(true);
+        TPX_Core_Logs_Utils::log_message('TPX - AOR_Report::build_report_query', 'info', true);
+        TPX_Core_Logs_Utils::log_line(true);
+        TPX_Core_Logs_Utils::log_message("SQL query:\r\n\r\n" . $query, 'debug', true);
+        TPX_Core_Logs_Utils::log_line(true);
+        //-------------------------------------------------------------------------------------------------------------------
+
         return $query;
     }
 
@@ -1254,6 +1286,41 @@ class AOR_Report extends Basic
                     }
                 }
                 $data = $field_module->field_defs[$field->field];
+
+                //---------------------------------------------------------------------------------------------------------------------------
+                // TPX CUSTOM CODE
+                // Hacer los join necesarios en el report para el order por el click en las cabeceras
+                //---------------------------------------------------------------------------------------------------------------------------
+
+                $data_original = $data; // Esto es pq el if de abajo me sobrescribe el $data['type'] y necesito el tipo este mas abajo
+                if ($data['type'] == 'relate') {
+                    $objectName = BeanFactory::getObjectName($field_module->module_dir);
+                    VardefManager::loadVardef($field_module->module_dir, $objectName, true);
+                    global $dictionary;
+                    $fields_module = $dictionary[$objectName]['fields'];
+
+                    // Si tiene el campo hago el join, sino lo tiene es pq la relacion es inversa y el if linea 1326 de abajo se encarga de hacerla
+                    $custom_join = false;
+                    if (isset($fields_module[$data['id_name']]) && isset($fields_module[$data['id_name']]['dbType'])) {
+                        $custom_join = true;
+                        $rel = $data['link'];
+                        $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
+                        $oldAlias = $table_alias;
+                        $table_alias = $table_alias . ":" . $rel;
+
+                        $query =
+                            $this->build_report_query_join(
+                                $rel,
+                                $table_alias,
+                                $oldAlias,
+                                $field_module,
+                                'relationship',
+                                $query,
+                                $new_field_module);
+                        $field_module = $new_field_module;
+                    }
+                }
+                //----------------------------------------------------------------------------------
 
                 if ($data['type'] == 'relate' && isset($data['id_name'])) {
                     $field->field = $data['id_name'];
@@ -1326,6 +1393,46 @@ class AOR_Report extends Basic
                     unset($query['id_select'][$table_alias]);
                 }
 
+                //----------------------------------------------------------------------------------
+                // TPX CUSTOM CODE
+                // Permitir ordenar al dar click en la cabecera de una columna en la tabla de lso reportes
+                //----------------------------------------------------------------------------------
+
+                // Para poner una propiedad de la tabla que se hace join entre los campos del select
+                // los campos a seleccionar con este orde de precedencia name,firstname,title, e id com oultima opcion
+
+                if ($data_original['type'] == 'relate') {
+                    $nombre_modulo = $new_field_module->module_dir;
+                    $objectName = BeanFactory::getObjectName($nombre_modulo);
+                    VardefManager::loadVardef($nombre_modulo, $objectName, true);
+                    global $dictionary;
+                    $fields = $dictionary[$objectName]['fields'];
+
+                    // Si se cumple esto es que tienen un campo con el nombre name
+                    // no puedo preguntar solo por $fields['name'] ya que este field siempre existe en un sugarBean
+                    // modulos sin campo name en la tabla y con campo fisrt_name => Users,Contacts, Leads;
+                    if (isset($fields['name']) && isset($fields['name']['dbType'])) {
+                        $propiedad_en_select = 'name';
+                    } elseif (isset($fields['first_name']) && isset($fields['first_name']['dbType'])) {
+                        $propiedad_en_select = 'first_name';
+                    } else  // sino tienen ni name ni firstname le dejo el id para que no de error
+                        $propiedad_en_select = 'id';
+
+                    $cstm_alias = $field->label . '_cstm_alias' . $i;
+
+                    if ($custom_join) {
+                        $query['select'][] = $this->db->quoteIdentifier($table_alias) . '.' . $propiedad_en_select . ' AS ' . $cstm_alias;
+                        $select_field = $this->db->quoteIdentifier($oldAlias) . '.' . $field->field;
+                        $select_field_db = $cstm_alias;
+                        //$select_field_db = $this->db->quoteIdentifier($table_alias) . '.' . $propiedad_en_select;
+                    } else {
+                        $select_field_db = $cstm_alias;
+                        //$select_field_db = $this->db->quoteIdentifier($table_alias) . '.' . $propiedad_en_select;
+                    }
+
+                }
+                //----------------------------------------------------------------------------------
+
                 if ($field->group_by == 1) {
                     $query['group_by'][] = $select_field;
                 } elseif ($field->field_function != null) {
@@ -1334,14 +1441,51 @@ class AOR_Report extends Basic
                     $query['second_group_by'][] = $select_field;
                 }
 
-                if ($field->sort_by != '') {
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------
+                // TPX CUSTOM CODE
+                // Aplicar el ordenar en un orden determinado segun lo que venga o no por el request en los reportes
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                // El order que vienen por parametro que tenga preferencia del order por defecto
+                // O sea si viene este parametro, el va a hacer el primer campo en el order_by
+                $field_th_order = (isset($_REQUEST['order_by']) && $_REQUEST['order_by'] != '') ? $_REQUEST['order_by'] : null;
+                $field_th_sort_order = (isset($_REQUEST['sort_order']) && $_REQUEST['sort_order'] != '') ? $_REQUEST['sort_order'] : 'ASC';
+
+                // El parametro del order en lo header de la table se genera con el valor field->field, por lo que puedo comparar podria comparar
+                //  $field->field == $field_th_order
+                // pero por por el if de la linea 1317 para campos relate cambia el field al ide_name =>  $field->field = $data['id_name'] por lo
+                // la comaparacion $field->field == $field_th_order para campos relate falla y no ordena en los casos dinamico, por lo tanto comparo con el $data_original que lo guardo
+                // arriba antes de de que lo cambien más abajo. El if de la linea 1318 quizas me sirva o en si "deberia' hacer lo que estamos tratando de parchear
+                // que no hace bien el order en campos relate, pero no quise tocarlo por si acaso.
+
+                if ($data_original['name'] == $field_th_order) {
+
+                    if ($query['sort_by'] == null) ;
+                    $query['sort_by'] = array();
+
+                    $sort_order = $field_th_sort_order;
+                    if ($data['type'] == 'date' || $data['type'] == 'datetime') {
+                        array_unshift($query['sort_by'], $select_field_db . " " . $sort_order);
+                    }
+                    if ($data_original['type'] == 'relate') {
+                        array_unshift($query['sort_by'], $select_field_db . " " . $sort_order);
+                    } else {
+                        //$query['sort_by'][] = $select_field . " " . $sort_order;
+                        array_unshift($query['sort_by'], $select_field . " " . $sort_order);
+                    }
+
+                } elseif ($field->sort_by != '') {
                     // If the field is a date, sort by the natural date and not the user-formatted date
                     if ($data['type'] == 'date' || $data['type'] == 'datetime') {
+                        $query['sort_by'][] = $select_field_db . " " . $field->sort_by;
+                    }
+                    if ($data_original['type'] == 'relate') {
                         $query['sort_by'][] = $select_field_db . " " . $field->sort_by;
                     } else {
                         $query['sort_by'][] = $select_field . " " . $field->sort_by;
                     }
                 }
+                //------------------------------------------------------------------------------
 
                 $query['select'][] = $select_field . " AS '" . $field->label . "'";
 
@@ -1578,6 +1722,21 @@ class AOR_Report extends Basic
                         $condition->value = $condParam['value'];
                         $condition->operator = $condParam['operator'];
                         $condition->value_type = $condParam['type'];
+
+                        //-----------------------------------------------------------------------------
+                        // TPX CUSTOM CODE
+                        // Actualizar los elementos que vienen en el request como condiciones extras en los reportes
+                        //-----------------------------------------------------------------------------
+                        if (isset($_REQUEST['parameter_id'])) {
+                            $params_ids = $_REQUEST['parameter_id'];
+                            $params_values = $_REQUEST['parameter_value'];
+                            foreach ($params_ids as $ikey => $iid) {
+                                if ($params_ids[$ikey] == $condition->id) {
+                                    $condition->value = isset($params_values[$ikey]) ? $params_values[$ikey] : $condition->value;
+                                }
+                            }
+                        }
+                        //--------------------------------------------------------------------------------------
                     }
 
                     switch ($condition->value_type) {

@@ -604,6 +604,14 @@ class SugarApplication
             }
         } else {
             if (can_start_session()) {
+                //----------------------------------------------------------------------
+                // TPX CUSTOM CODE
+                // Aplicar un name personalizado para la session para que varios suitecrm convivan en el mismo dominio
+                //----------------------------------------------------------------------
+                global $sugar_config;
+                $app_unique_key = isset($sugar_config['unique_key']) ? $sugar_config['unique_key'] : '';
+                session_name('suitecrm-' . $app_unique_key);
+                //----------------------------------------------------------------------
                 session_start();
             }
         }

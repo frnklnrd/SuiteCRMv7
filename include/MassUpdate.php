@@ -1301,6 +1301,13 @@ EOQ;
         $cal_dateformat = $timedate->get_cal_date_format();
         global $app_strings, $app_list_strings, $theme;
 
+        //---------------------------------------------------------------------------------
+        // TPX CUSTOM CODE
+        // Corrigiendo problema con los campos de tipo fecha en el massupdate
+        //---------------------------------------------------------------------------------
+        global $current_user;
+        $calendar_fdow = $current_user->get_first_day_of_week();
+        //---------------------------------------------------------------------------------
         $javascriptend = <<<EOQ
 		 
 	<span id="{$varname}_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
@@ -1335,6 +1342,12 @@ EOQ;
 			daFormat : "$cal_dateformat",
 			ifFormat : "$cal_dateformat",
 			button : "{$varname}_trigger",
+			//-----------------------------------------------------------------------
+			// TPX CUSTOM CODE
+			// Corrigiendo problema con los campos de tipo fecha en el massupdate
+			//-----------------------------------------------------------------------
+			startWeekday: "{$calendar_fdow}",
+			//-----------------------------------------------------------------------
 			singleClick : true,
 			step : 1,
 			weekNumbers:false

@@ -238,7 +238,17 @@ class PopupSmarty extends ListViewSmarty
         foreach ($this->data['data'] as $val) {
             $associated_row_data[$val['ID']] = $val;
             if ($searchNameOverride) {
-                $associated_row_data[$val['ID']]['NAME'] = $locale->getLocaleFormattedName($val['FIRST_NAME'], $val['LAST_NAME']);
+                //------------------------------------------------------------------------------------------------------
+                // TPX CUSTOM CODE
+                // Modificando el comportamiento por defecto, para que al buscar no de error cuando el usuario
+                //------------------------------------------------------------------------------------------------------
+                // usa un formato de name para los elementos de tipo Person
+                //$associated_row_data[$val['ID']]['NAME'] = $locale->getLocaleFormattedName($val['FIRST_NAME'], $val['LAST_NAME']);
+                $associated_row_data[$val['ID']]['NAME'] = $locale->getLocaleFormattedName($val['FIRST_NAME'], $val['LAST_NAME'], '', '', 'f l');
+                // esto es por si se quiere utilizar el first_name y el last_name en los popup helpers
+                $associated_row_data[$val['ID']]['FIRST_NAME_C'] = isset($val['FIRST_NAME_C']) ? $val['FIRST_NAME_C'] : $val['FIRST_NAME'];
+                $associated_row_data[$val['ID']]['LAST_NAME_C'] = isset($val['LAST_NAME_C']) ? $val['LAST_NAME_C'] : $val['LAST_NAME'];
+                //------------------------------------------------------------------------------------------------------
             }
         }
         $is_show_fullname = showFullName() ? 1 : 0;

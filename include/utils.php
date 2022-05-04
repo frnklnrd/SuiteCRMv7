@@ -4635,6 +4635,14 @@ function loadCleanConfig()
 {
     $sugar_config = array();
     require 'config.php';
+    //-------------------------------------------------------------------------
+    // TPX CUSTOM CODE
+    // Load .env.php file to override configuration
+    //-------------------------------------------------------------------------
+    if (file_exists('.env.php') && is_readable('.env.php')) {
+        require_once('.env.php');
+    }
+    //------------------------------------------------------------------------
 
     return $sugar_config;
 }

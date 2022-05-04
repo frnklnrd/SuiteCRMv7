@@ -1,0 +1,312 @@
+#EditView {
+    width: 99%;
+}
+
+#kanban-board {
+    /* aromero: cambio overflow de hidden a auto. */
+    /*
+    overflow-x: auto;
+    overflow-y: auto;
+    */
+}
+
+#kanban-board > table {
+    width: 100%;
+    margin-bottom: 20px;
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    box-sizing: border-box;
+    border: 1px solid #DDD;
+    margin-top: 10px;
+}
+
+#kanban-board > table > tbody > tr > th {
+    border: 1px solid #DDD;
+}
+
+#kanban-board > table > tbody > tr > td {
+    border: 1px solid #DDD;
+}
+
+#kanban-board > h1
+{
+    font-size: 26px;
+}
+
+#kanban-board-close {
+    position:fixed;
+    height:200px;
+    bottom:0px;
+    left:0px;
+    right:20px;
+    margin-left: 20px;
+    margin-bottom:0px;
+    visibility: hidden;
+    /*width: 100%;*/
+}
+
+#kanban-board-close tr.kanban-board-header {
+    z-index: 1501;
+}
+
+#kanban-board-close tr.line {
+    background: white;
+    z-index: 1501;
+}
+
+#kanban-board-close > table  {
+    border: 1px solid #DDD;
+    border-spacing: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#kanban-board-close > table >tbody > tr > td {
+    border: 1px solid #DDD;
+    background: white;
+    color: #000;
+    padding: 0;
+    margin: 0;
+}
+
+#kanban-modal {
+    background: white;
+    border: 3px solid #0074cc;
+    display:none;
+    padding:10px;
+    width: 500px;
+    position: absolute;
+    z-index: 99999;
+}
+
+.kanban-board-header {
+    height: 50px;
+}
+
+.kanban-form-container {
+    box-shadow: 5px 5px 5px #999999;
+    border-style: outset;
+    border-width: medium;
+}
+
+.kanban-modal-simpletext {
+    text-align: center;
+    width: 300px;
+}
+
+.kanban-panel {
+    background-color: #FFF;
+    border-bottom-color: #4B4A4A;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: collapse;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: stretch stretch;
+    border-image-slice: 100% 100% 100% 100%;
+    border-image-source: none;
+    border-image-width: 1 1 1 1;
+    border-left-color: #4B4A4A;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: #4B4A4A;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-spacing: 0px 0px;
+    border-top-color: #4B4A4A;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    box-sizing: border-box;
+    color: #333;
+    background: white;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 22.85px;
+    min-height: 45px;
+    margin: 5px;
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+
+.kanban-panel-body {
+    border-collapse: collapse;
+    border-spacing: 0px 0px;
+    box-sizing: border-box;
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+    line-height: 22.85px;
+    padding: 5px;
+}
+.kanban-panel-body-text{
+    padding: 8px;   
+    text-align: justify;
+}
+
+.kanban-panel-body > table > tbody > tr > td {
+    //border: 1px solid green;
+}
+
+.kanban-panel-heading {
+    background-color: #4B4A4A;
+    background-repeat: repeat-x;
+    border-bottom-color: #4B4A4A;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-collapse: collapse;
+    border-left-color: #4B4A4A;
+    border-right-color: #4B4A4A;
+    border-spacing: 0px 0px;
+    border-top-color: #4B4A4A;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-sizing: border-box;
+    color: #FFF;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+    line-height: 22.85px;
+    padding: 3px;
+}
+
+.kanban-panel-menu {
+    display: none;
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+    position: absolute;
+    z-index: 10;
+}
+
+.kanban-panel-title {
+    border-collapse: collapse;
+    border-spacing: 0px 0px;
+    box-sizing: border-box;
+    color: #FFF;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 10.6px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.kanban-panel-title-loading{
+    background-color:#FFF;
+    background: url("../imgs/ajax-loader.gif");
+    width: 16px;
+    height: 11px;
+    float:right;
+}
+
+.mark-red {
+    width: 10px;
+    background-color: #dc6e1c;
+}
+
+.mark-yellow {
+    width: 10px;
+    background-color: #e6d41c;
+}
+
+.mark-green {
+    width: 10px;
+    background-color: #90ad41;
+}
+
+.column {
+    min-width: 250px;
+}
+
+.ghost {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+    opacity: 0.4;
+    border-style: dashed;
+}
+
+.item {
+    width: 200px;
+}
+
+.myArea {
+    white-space: nowrap;
+    color: #CCC;
+    font: 12px Arial,Verdana,Helvetica,sans-serif;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+.sortable-wrapper {
+    float: left;
+    margin-left: 10px;
+}
+
+.text-center {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.ui-dialog {
+    z-index: 1000;
+}
+
+.ui-state-default {
+    min-height: 45px;
+}
+
+a.btn {
+    cursor: pointer;
+}
+
+div.sortable {
+    /* Comento el overflow auto. 
+    overflow-y: auto;
+    */
+    /*background: red;*/
+    min-height: 200px;
+    /*height: 100%;*/
+}
+/* aromero: accordion */
+.accordion {
+    padding: 0px;
+  }
+
+.fix-header{
+    position: fixed;
+    top: 60px;
+    margin: -1px;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    z-index: 999;
+    background: #FFFFFF;
+}
+.fix-header-kanban{
+    position: fixed;
+    top: 60px;
+    margin: -1px;
+    width: 100%;
+    background: #FFFFFF;
+    z-index: 999;
+}
+.fix-header-kanban th{
+    padding: 16px 9px 16px 9px !important;
+}
+.drag-place-holder{
+    background: #DDD;
+    border-color: #a6a3a4;
+    border-style: solid;
+}
+
+#kaban-nav > span:first-child > span:first-child{
+    font-size: 28px;
+    margin-left: 20px;
+}
+
+#kanban-filters{
+    margin-top: 20px;
+}
+

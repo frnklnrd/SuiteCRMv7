@@ -340,6 +340,18 @@ class Configurator
                 include('config_override.php');
             }
         }
+        //-------------------------------------------------------------------------
+        // TPX CUSTOM CODE
+        // Load .env.php file to override configuration
+        //-------------------------------------------------------------------------
+        if (file_exists('.env.php')) {
+            if (!is_readable('.env.php')) {
+                $GLOBALS['log']->fatal("Unable to read the .env.php file. Check the file permissions");
+            } else {
+                include('.env.php');
+            }
+        }
+        //-------------------------------------------------------------------------
         return $sugar_config;
     }
 

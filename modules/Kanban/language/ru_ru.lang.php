@@ -1,0 +1,27 @@
+<?php
+$mod_strings['LBL_TYPE'] = 'Тип настройки';
+$mod_strings['LBL_TARGET_MODULE'] = 'Модуль';
+$mod_strings['LBL_TARGET_FIELD'] = 'Поле';
+$mod_strings['LBL_TARGET_VALUES'] = 'Отображать как колонки';
+$mod_strings['LBL_TARGET_CLOSE_VALUES'] = 'Отображать как закрывающие колонки';
+$mod_strings['LBL_HEADER_FIELDS'] = 'Поля заголовка';
+$mod_strings['LBL_BODY_FIELDS'] = 'Поля содержимого';
+$mod_strings['LBL_HOME'] = 'На главную';
+$mod_strings['LBL_KANBAN'] = 'Канбан';
+$mod_strings['LBL_LIST'] = 'Настройки';
+$mod_strings['LBL_NEW'] = 'Создать канбан';
+$mod_strings['LBL_NAME'] = 'Автоматическое название';
+$mod_strings['LBL_SELF_NAME'] = 'Своё название';
+$mod_strings['LBL_CREATE_TASK'] = 'Создать задачу';
+$mod_strings['LBL_CREATE_MEETING'] = 'Назначить встречу';
+$mod_strings['LBL_CREATE_CALL'] = 'Назначить звонок';
+$mod_strings['LBL_CREATE_MISSION'] = 'Создать событие';
+$mod_strings['LBL_DETAILS'] = 'Детали';
+$mod_strings['LBL_PLANS'] = 'Планы';
+$mod_strings['LBL_HISTORY'] = 'История';
+$mod_strings['LBL_EMPTY_YET'] = 'Записей нет';
+$mod_strings['LBL_LIST_TARGET_MODULE'] = 'Список';
+$mod_strings['LBL_CLOSE_BUTTON'] = 'Закрыть';
+$mod_strings['LBL_MODAL_CLOSE_BUTTON'] = 'Закрыть';
+$mod_strings['LBL_KANBAN_NOT_ACTIVE'] = 'Модуль недоступен';
+$mod_strings['LBL_KANBAN_CHECK_LICENSE'] = 'Пожалуйста, обновите лицензию или проверьте настройки в Администрировании';
